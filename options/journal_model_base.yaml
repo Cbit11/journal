@@ -1,0 +1,68 @@
+name: journal_model_base
+num_gpu: auto
+manual_seed: 0
+resume_training: False
+device: cuda
+# dataset and data loader settings
+train_hr_pth: /home/cjrathod/scratch/Download_df2k/LSDIR/Train/HR
+train_lr_pth: /home/cjrathod/scratch/Download_df2k/LSDIR/Train/LR/X2
+
+val_hr_pth: /home/cjrathod/scratch/Download_df2k/LSDIR/Valid/HR
+val_lr_pth: /home/cjrathod/scratch/Download_df2k/LSDIR/Valid/LR/X2
+# Dataloaders
+#train_dataloader:
+train_batch_size: 32
+train_shuffle : True
+scale: 2
+gt_size: 128
+#val_dataloader:
+val_batch_size: 1
+val_shuffle: false
+
+#network_g:
+img_size: 64
+patch_size: 1
+in_chans: 3
+dims: 128
+kernel_size: 3
+dilation: 1
+num_heads: 8
+num_blocks: 10
+stride: 1
+downsample: 2 
+upscale: 2
+drop_rate: 0.2
+drop_path_rate: 0.2
+window_size: 8
+overlap_ratio: 0.5 
+ape: false
+upsampler: 'pixelshuffle'
+d_state: 16
+d_conv: 3
+expand: 2 
+norm_layer: 'nn.LayerNorm'
+resi_connection: '1conv' 
+img_range: 1.
+
+#train:
+Iteration: 800000
+ema_decay: 0.999
+#optim_g:
+type: Adam
+lr: !!float 1.5e-5
+weight_decay: 0
+betas: [0.9, 0.99]
+
+#scheduler:
+type: MultiStepLR
+milestones: [300000,500000,650000,700000, 750000]
+gamma: 0.5
+
+warmup_iter: 80000  # no warm up
+
+  # losses
+#pixel_opt:
+checkpoint: /project/def-mhassanz/cjrathod/Hamba/checkpoint/chkpt_10_DF2K.pt
+checkpoint_folder: /home/cjrathod/projects/def-mhassanz/cjrathod/HAMBA/chkpts/X2_base
+
+
